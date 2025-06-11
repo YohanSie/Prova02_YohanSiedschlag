@@ -39,23 +39,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Excluir Usuário</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2 style="margin-top:40px;">Excluir Usuário</h2>
+    <h2>Excluir Usuário</h2>
 
     <?php if (!empty($usuarios)): ?>
-        <table class="tabela-usuarios">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Perfil</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Perfil</th>
+                <th>Ações</th>
+            </tr>
             <?php foreach ($usuarios as $usuario): ?>
                 <tr>
                     <td><?= htmlspecialchars($usuario['id_usuario']) ?></td>
@@ -63,18 +60,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     <td><?= htmlspecialchars($usuario['email']) ?></td>
                     <td><?= htmlspecialchars($usuario['id_perfil']) ?></td>
                     <td>
-                        <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>" 
-                           class="excluir-link"
-                           onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                        <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
-            </tbody>
         </table>
     <?php else: ?>
         <p>Nenhum usuário encontrado.</p>
     <?php endif; ?>
 
-    <button class="btn-voltar" onclick="window.location.href='principal.php'">Voltar</button>
+    <a href="principal.php">Voltar</a>
 </body>
 </html>

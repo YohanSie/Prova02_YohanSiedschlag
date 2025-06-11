@@ -66,6 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="reset">Cancelar</button>
     </form>
 
-    <a href="./principal.php">Voltar</a>
+    <button class="btn-voltar" onclick="window.location.href='principal.php'">Voltar</button>
 </body>
 </html>
