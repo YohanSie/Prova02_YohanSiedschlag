@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Login inválido
-        echo "<script>alert('E-mail ou senha incorretos);window.location.href='login.php';</script>";
+        echo "<script>alert('E-mail ou senha incorretos');window.location.href='login.php';</script>";
     }
 }
 ?>

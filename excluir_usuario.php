@@ -38,43 +38,148 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excluir Usuário</title>
-    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS Personalizado -->
+    <style>
+        /* Animação de fade-in para a página */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilização da tabela */
+        .table-hover tbody tr:hover {
+            background-color: rgba(0,123,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        /* Botão de exclusão personalizado */
+        .btn-delete {
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-delete:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Card personalizado */
+        .custom-card {
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Badge de perfil */
+        .badge-perfil {
+            font-size: 0.85em;
+            padding: 0.5em 0.8em;
+        }
+    </style>
 </head>
-<body>
-    <h2 style="margin-top:40px;">Excluir Usuário</h2>
+<body class="bg-light">
+<div class="container py-5 fade-in">
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="display-6">
+            <i class="bi bi-person-x-fill text-danger me-2"></i>
+            Excluir Usuário
+        </h2>
+        <button class="btn btn-outline-secondary" onclick="window.location.href='principal.php'">
+            <i class="bi bi-arrow-left me-2"></i>Voltar
+        </button>
+    </div>
 
-    <?php if (!empty($usuarios)): ?>
-        <table class="tabela-usuarios">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Perfil</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($usuarios as $usuario): ?>
-                <tr>
-                    <td><?= htmlspecialchars($usuario['id_usuario']) ?></td>
-                    <td><?= htmlspecialchars($usuario['nome']) ?></td>
-                    <td><?= htmlspecialchars($usuario['email']) ?></td>
-                    <td><?= htmlspecialchars($usuario['id_perfil']) ?></td>
-                    <td>
-                        <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>" 
-                           class="excluir-link"
-                           onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>Nenhum usuário encontrado.</p>
-    <?php endif; ?>
+    <!-- Card principal -->
+    <div class="card custom-card">
+        <div class="card-body p-0">
+            <?php if (!empty($usuarios)): ?>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col" class="px-4">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Perfil</th>
+                            <th scope="col" class="text-center">Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($usuarios as $usuario): ?>
+                            <tr>
+                                <td class="px-4"><?= htmlspecialchars($usuario['id_usuario']) ?></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person-circle text-secondary me-2"></i>
+                                        <?= htmlspecialchars($usuario['nome']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <i class="bi bi-envelope text-secondary me-2"></i>
+                                    <?= htmlspecialchars($usuario['email']) ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    $perfil_class = match((int)$usuario['id_perfil']) {
+                                        1 => 'bg-danger',
+                                        2 => 'bg-primary',
+                                        3 => 'bg-success',
+                                        4 => 'bg-info',
+                                        default => 'bg-secondary'
+                                    };
+                                    $perfil_nome = match((int)$usuario['id_perfil']) {
+                                        1 => 'Administrador',
+                                        2 => 'Secretaria',
+                                        3 => 'Almoxarife',
+                                        4 => 'Cliente',
+                                        default => 'Desconhecido'
+                                    };
+                                    ?>
+                                    <span class="badge <?= $perfil_class ?> badge-perfil">
+                                            <?= $perfil_nome ?>
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>"
+                                       class="btn-delete"
+                                       onclick="return confirm('Tem certeza que deseja excluir este usuário?')">
+                                        <i class="bi bi-trash me-1"></i>
+                                        Excluir
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <div class="text-center py-5">
+                    <i class="bi bi-exclamation-circle text-secondary" style="font-size: 3rem;"></i>
+                    <p class="h5 mt-3 text-secondary">Nenhum usuário encontrado.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
-    <button class="btn-voltar" onclick="window.location.href='principal.php'">Voltar</button>
+<!-- Bootstrap 5 JS Bundle com Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -113,7 +113,38 @@ $opcoes_menu = $permissoes[$id_perfil];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Principal</title>
 
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
     <link rel="stylesheet" href="./css/styles.css">
+
+    <style>
+        .copyright-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease;
+        }
+
+        .copyright-logo:hover {
+            opacity: 0.9;
+        }
+
+        .copyright-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
 
     <script src="./scripts/scripts.js"></script>
 </head>
@@ -149,6 +180,13 @@ $opcoes_menu = $permissoes[$id_perfil];
             <?php endforeach; ?>
         </ul>
     </nav>
+
+    <!-- Copyright Logo -->
+    <div class="copyright-logo">
+    <span class="copyright-text">
+        <i class="bi bi-c-circle"></i> 2024 Yohan Siedschlag
+    </span>
+    </div>
 </body>
 
 </html>
